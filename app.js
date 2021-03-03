@@ -4,6 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+var session = require('express-session');
+
+var User=require('./models/user.model.js');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var ventaRouter = require('./routes/venta');
@@ -22,6 +27,50 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'ldkfjklsdjfsdjfsjdlfjsdlkfflkj234j2kh523-+42',
+  saveUninitialized:true,
+  resave:true
+}));
+
+
+
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+var bcrypt = require('bcrypt');
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ login: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      console.log(bcrypt.hashSync(password,10));
+      //if (!user.validPassword(password)) {
+      if(!bcrypt.compareSync(password,user.password)){
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  User.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -2,11 +2,13 @@
 var Cliente = require('../models/cliente.model');
 var express = require('express');
 var router = express.Router();
+var auth =require('../middleware/auth');
 
 /* GET home page. */
-router.get('/cliente', function(req, res, next) {
+router.get('/cliente',auth, function(req, res, next) {
     console.log("buscar",req.query.search);
-    Cliente.find({nit:{$regex:req.query.search},estado:1},(err,lista)=>{
+    var dato = req.query.search;
+    Cliente.find({nit: new RegExp(dato,'i'),estado:1},(err,lista)=>{
         if(err)
             res.json({item:[],error:err});
         else
