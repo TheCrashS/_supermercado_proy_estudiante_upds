@@ -1,0 +1,78 @@
+<% layout('../layout/templateLTE') %>
+<% block('titulo1', "Personal Administrativo") -%>
+<% block('titulo2', "Personal") -%>
+<%
+    var action='',boton='';
+    if(_id){
+        action='edit/'+_id;
+        boton='Editar'
+        %>Nuevo Persona<%
+    }else
+    {
+        action='nuevo';
+        boton='Registrar';
+        %>Nuevo Persona<%
+    }
+    %>
+    <br>
+    <div class="container">
+<form action="/personal/<%=action%>" encType="multipart/form-data"  method="post" >
+    Nombre: <input type="text" name="Nombre" value="<%=Nombre%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['Nombre']?error.errors['Nombre'].message:''%>
+    </div><br>
+    Apellido Paterno: <input type="text" name="Apellido_pat" value="<%=Apellido_pat%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['Apellido_pat']?error.errors['Apellido_pat'].message:''%>
+    </div><br>
+    Apellido Materno: <input type="text" name="Apellido_mat" value="<%=Apellido_mat%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['Apellido_mat']?error.errors['Apellido_mat'].message:''%>
+    </div><br>
+    Ci: <input type="text" name="Ci" value="<%=Ci%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['Ci']?error.errors['Ci'].message:''%>
+    </div><br>
+    Fecha de Nacimineto: <input type="date" name="Fecha_nac" value="<%=Fecha_nac%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['Fecha_nac']?error.errors['Fecha_nac'].message:''%>
+    </div><br>
+    Genero: <input type="text" name="Genero" value="<%=Genero%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['Genero']?error.errors['Genero'].message:''%>
+    </div><br>
+    Celular: <input type="number" name="Celular" value="<%=Celular%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['Celular']?error.errors['Celular'].message:''%>
+    </div><br>
+    Login: <input type="text" name="login" value="<%=login%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['login']?error.errors['login'].message:''%>
+    </div><br>
+    password: <input type="password" name="password" value="<%=password%>" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['password']?error.errors['password'].message:''%>
+    </div><br>
+    <% if(avatar!=''){%>
+        <img src="/avatar/<%=avatar%>" >
+    <% } %>
+    Avatar: <input type="file" accept="image/*" name="avatar" id="" class="form-control my-colorpicker1 colorpicker-element">
+    <div style="color: brown;">
+        <%=error && error.errors['avatar']?error.errors['avatar'].message:''%>
+    </div><br>
+
+    Rol: 
+        <select name="Rol" id="">
+            <% for(i=0;i<listaRoles.length;i++){%>
+            <option value="<%=listaRoles[i]._id%>" 
+                <% if(listaRoles[i]._id.equals(Rol)){%>
+                    selected<%}%> 
+                ><%=listaRoles[i].nombre%></option>
+            <%}%>
+        </select>
+    <div style="color: brown;">
+        <%=error && error.errors['Rol']?error.errors['Rol'].message:''%>
+    </div><br>
+    <input type="submit" value="<%=boton%>">
+    </form>
+</div>

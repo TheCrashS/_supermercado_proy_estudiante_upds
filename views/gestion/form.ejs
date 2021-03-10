@@ -1,0 +1,88 @@
+<% layout('../layout/templateLTE') %>
+<% block('titulo1', "GESTION DE ALMACEN ") -%>
+
+<% block('script',"") -%>
+<% block('titulo2', "") -%>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerente</title>
+</head>
+
+<div><body>
+        <%
+    var action='',boton='';
+    if(_id){
+        action='edit/'+_id;
+        boton='Editar';
+        %>Editar producto<%
+    }else
+    {
+        action='nuevo';
+        boton='Enviar';
+        %><center><h1>RECEPCION DE LOS PRODUCTOS</h1></center><%
+    }
+    %>
+
+    <style>
+        label{
+            display: block;
+            float: left;
+            width: 90px;
+
+        }
+    </style>
+
+   <form action="/gestion/<%=action%>" method="POST">
+    
+
+<table border="1">
+    <tr>
+        <th>Tipo de producto</th>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Marca</th>
+        <th>Proveedor</th>
+    </tr>
+
+    <tr>
+        <td>
+            <select name="tipo" id="tipo">
+                <option>Abarrotes</option> <option>Bebidas</option> <option>Carnes</option>
+                 <option>Dulces</option> <option>Fiambres</option> <option>Limpieza</option>
+                <option>Lacteos</option>
+        </td>
+
+        <td><input type="text" name="nombre" id="nombre" value="<%nombre%>"></td>
+        <td><input type="number" name="cantidad" id="cantidad" value="<%cantidad%>"></td>
+        <td><input type="number" name="precio" id="precio" value="<%precio%>"></td>
+        <td><input type="text" name="marca" id="marca" value="<%marca%>"></td>
+        <td><input type="text" name="proveedor" id="proveedor" value="<%proveedor%>"></td>
+    </tr>
+</table>
+
+    <table border="1">
+
+    <tr>
+        <th>Presentacion</th>
+        <th>Fecha de vencimiento</th>
+    </tr>
+
+    <tr>
+        <td><input type="text" name="presentacion" id="presentacion" value="<%presentacion%>" ></td>
+
+        <td><input type="date" name="vencimiento" id="vencimiento" value="<%vencimiento%>"></td>
+    </tr>
+    </table>
+
+
+        <input type="submit" value="<%=boton%>">
+    </form>
+</div> 
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-var cone= require("../config/conexiondbmongo");
+var cone= require("../config/conexion");
 var mongoose = require("mongoose");
 const schema = new mongoose.Schema(
     {   
